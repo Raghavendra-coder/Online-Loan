@@ -46,3 +46,9 @@ form div .submit-button:hover{
         padding-top: 20px;
     }
 }
+@media(max-width : 1090px)
+{
+   .main-content .table-div{
+   overflow-x: scroll;
+   }
+}
