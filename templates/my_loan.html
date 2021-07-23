@@ -20,7 +20,7 @@
                     <h1 class="text-center"><img src="{% static 'images/others/redcarpet1.png' %}"></h1>
                     <h4 class="mx-3 my-2">Requested Loans :</h4>
                     <div class="" style="padding: 20px 5px 10px 5px;">
-                        {% if loan %}
+                        {% if not loan %}
                         <h1 style="color:green;">No Loans Yet</h1>
                         {% else %}
                         <table class="table">
