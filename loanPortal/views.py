@@ -39,18 +39,19 @@ def user_signup(request):
     form = SignupForm()
     if request.method == 'POST':
         form = SignupForm(request.POST, request.FILES)
-        user = form.save(commit=False)
-        password = form.cleaned_data['password']
-        user.set_password(password)
-        if role == 'admin':
-            user_role = 'Admin'
-        elif role == 'agent':
-            user_role = 'Agent'
-        else:
-            user_role = 'Customer'
-        user.role = user_role
-        user.save()
-        return HttpResponseRedirect(reverse('cong'))
+        if form.is_valid():
+            user = form.save(commit=False)
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            if role == 'admin':
+                user_role = 'Admin'
+            elif role == 'agent':
+                user_role = 'Agent'
+            else:
+                user_role = 'Customer'
+            user.role = user_role
+            user.save()
+            return HttpResponseRedirect(reverse('cong'))
     context = {
         'form': form,
     }
