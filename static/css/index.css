@@ -1,0 +1,88 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+}
+body{
+    background-color: rgb(240, 240, 240);
+}
+.main-div{
+    padding: 0;
+    width: 450px;
+    height: 400px;
+    margin: auto;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgb(196, 44, 17);
+    transition: ease 0.5s;
+    background-color: white;
+}
+.main-div:hover{
+    box-shadow: 2px 0px 15px 4px grey;
+    border: none;
+}
+
+.main-content h1 img{
+    width: 80%;
+    padding: 20px;
+}
+.main-content div{
+    margin: 10px;
+}
+
+.main-content .buttons{
+    padding-top: 50px;
+}
+
+.main-content .buttons .admin{
+    border: 1px solid gold;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: gold;
+    transition: 0.5s ease;
+    padding: 10px;
+}
+.main-content .buttons .admin:hover{
+    background-color: gold;
+    color: white;
+    transform: scale3d(1.5, 1.5)
+}
+
+.main-content .buttons .agent{
+    border: 1px solid silver;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: silver;
+    transition: 0.5s ease;
+    padding: 10px;
+}
+.main-content .buttons .agent:hover{
+    background-color: silver;
+    color: white;
+    transform: scale3d(1.5, 1.5)
+}
+
+.main-content .buttons .customer{
+    border: 1px solid rgb(228, 58, 58);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: red;
+    transition: 0.5s ease;
+    padding: 10px;
+}
+.main-content .buttons .customer:hover{
+    background-color: red;
+    color: white;
+    transform: scale3d(1.5, 1.5)
+}
+
+ @media(max-width: 576px){
+     .main-div{
+         width: 95%;
+        margin: auto;
+     }
+ }

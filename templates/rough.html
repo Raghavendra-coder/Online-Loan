@@ -1,0 +1,18 @@
+{% if request.user.role == 'Admin' %}
+    <h1>Admin</h1>
+    {% elif request.user.role == 'Agent' %}
+    <h1>Agent</h1>
+    {% elif request.user.role == 'Customer' %}
+    <h1>Customer</h1>
+    {% else %}
+    <h1>None</h1>
+    {% endif %}
+
+
+    {{ form.loan_type }}
+                            <span class="text-danger"><h6>{{ form.loan_type.errors.as_text }}</h6></span>
+
+
+                            <div class="col-md-10 mt-3 mb-3 text-end button-div">
+                                <input type="submit" class="submit-button" value="Request Loan">
+                              </div>

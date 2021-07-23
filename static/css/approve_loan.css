@@ -1,0 +1,49 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.main-content{
+    border : 1px solid rgb(223, 49, 5);
+    border-radius: 30px;
+    transition: ease 0.4s;
+}
+.main-content:hover{
+    border: white;
+    box-shadow: 2px 0px 15px 4px grey;
+}
+.main-content h1 img{
+    width: 25%;
+}
+form div .ap_submit-button{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    outline: none;
+    transition: ease 0.4s;
+    box-shadow: none;
+    border: none;
+    padding:3px 12px 5px 12px;
+    
+}
+form div .rj_submit-button{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    outline: none;
+    transition: ease 0.4s;
+    box-shadow: none;
+    border: none;
+    padding:4px 15px 7px 15px
+}
+.button-div{
+    padding-top: 35px;
+}
+form div .ap_submit-button:hover{
+    background-color: rgb(0, 216, 36);
+}
+form div .rj_submit-button:hover{
+    background-color: rgb(255, 53, 2);
+}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/approve_loan.css' %}">
+    <title>Loan Status</title>
+    
+  </head>
+  <body>
+    <div class="container">
+        <div class="row mx-auto">
+          {% if request.user.role == 'Admin' %}
+            <div class="main-div mx-auto col-md-5" style="padding-top: 80px;">
+                <div class="main-content">
+                  
+                    <h1 class="text-center"><img src="{% static 'images/others/redcarpet1.png' %}"></h1>
+                    {{ loan.count }}
+                    <h4 class="mx-3 my-2">Loan Details :</h4>
+                    <form class="row g-3 mt-2 mx-3" method="POST" id="loan-form">
+                        {{ User }}
+                        {% csrf_token %}
+                          <div class="col-md-6">
+                            <label class="form-label">Name :</label><br>
+                            <label class="form-label" style="color: green;">{{ loan.user }}</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Loan Type :</label><br>
+                            <label class="form-label" style="color: green;">{{ loan.loan_type }}</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Principal :</label><br>
+                            <label class="form-label" style="color: green;">{{ loan.principle }}</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Loan Status :</label><br>
+                            <label class="form-label" style="color: green;">{{ loan.get_loan_status_display }}</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Tenure :</label><br>
+                            <label class="form-label" style="color: green;">{{ loan.tenure }}</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Emi :</label><br>
+                            <label class="form-label" style="color: green;">{{ loan.emi }}</label>
+                          </div>
+
+                          <div class="col-md-6 mt-3 mb-3 rj_button-div text-end" style="padding-top: 3px;">
+                            <a href="{% url 'reject_loan' pk=loan.pk %}" class="rj_submit-button" style="text-decoration: none;">Reject Loan</a>
+                          </div>
+                        <div class="col-md-6 mt-3 mb-3 ap_button-div text-start">  
+                          <input type="submit" class="ap_submit-button" value="Approve Loan">
+                        </div>
+                        
+                        <h6 class="my-3">Go <a href="{% url 'home' %}" style="text-decoration: none;"><b> Back </b></a></h6>
+                      </form>
+                </div>
+
+            </div>
+            {% else %}
+            <h1>Sorry for inconvenience</h1>
+            <h3>Go to <a href="{% url 'home' %}" style="text-decoration: none;">Home</a></h3>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+  <script>
+    $(document).ready(function(){
+      $("#id_loan_type").change(function(){
+        debugger;
+          loan_pk = $(this).find("option:selected").val()
+          loan_id = "loan-number-"+loan_pk
+          $(".loan-int").addClass("d-none")
+          $("#"+loan_id).removeClass("d-none")
+      })
+    })
+  </script>
+</html>
