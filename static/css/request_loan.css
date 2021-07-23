@@ -37,3 +37,16 @@ form div .submit-button:hover{
 .filter .form-control{
     width: 18%;
 }
+.table-div{
+    max-height: 400px;
+    overflow-y:scroll ;
+}
+@media(max-width : 576px)
+{
+   .main-content .table-div{
+   overflow-x: scroll;
+   }
+   .main-div{
+    padding-top: 20px;
+}
+}
