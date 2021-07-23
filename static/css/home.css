@@ -1,3 +1,6 @@
+.container .row{
+    padding-top: 50px ;
+}
 .main-div{
     width: 700px;
     min-height: 400px;
@@ -65,6 +68,11 @@ nav div a img{
         padding: 20px;
     }
     .navbar-brand{
-        width: 80%!important;
+        width: 50%!important;
     }
+    nav div a img {
+        width: 90%;
+    }
+    
+    
 }
