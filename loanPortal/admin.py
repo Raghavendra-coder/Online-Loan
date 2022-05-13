@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Loan, UserLoan
+from .models import User, Loan, UserLoan, Profile, AccuracyTable
 # Register your models here.
 
 
@@ -15,9 +15,19 @@ class UserLoanAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'principle', 'loan_type')
 
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'gender', 'education', 'income')
+
+
+class AccuracyTableAdmin(admin.ModelAdmin):
+    list_display = ('accuracy', 'created_on')
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(UserLoan, UserLoanAdmin)
 admin.site.register(Loan, LoanAdmin)
+admin.site.register(Profile, ProfileAdmin)
+admin.site.register(AccuracyTable, AccuracyTableAdmin)
 
 
 

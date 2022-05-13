@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth import login, logout
 from django.db.models import Q
-from .models import User, Loan, UserLoan
+from .models import User, Loan, UserLoan, Profile, AccuracyTable
+from .train_model import get_approval_probability
 
 # Create your views here.
 
@@ -247,3 +248,45 @@ def contact(request):
 
 def cong(request):
     return render(request, 'cong.html')
+
+
+def get_loan_approval_probability(request):
+    user = request.user
+    principle = request.GET.get('principle')
+    if principle:
+        profile = Profile.objects.filter(user=user).first()
+        if profile:
+            probability = AccuracyTable.objects.order_by('-created_on').first()
+            if probability:
+                chance = get_approval_probability(principle, profile.married, profile.dependents, profile.education,
+                                                  profile.self_employed, profile.income, profile.credit_history,
+                                                  profile.gender)
+                if chance:
+                    data = {
+                        'status': True,
+                        'load_status': True,
+                        'probability': round(probability.accuracy*100, 2)
+                    }
+                else:
+                    data = {
+                        'status': True,
+                        'load_status': False,
+                        'probability': 100 - round(probability.accuracy * 100, 2)
+                    }
+            else:
+                data = {
+                    'status': False,
+                    'message': 'Could not provide probability now.'
+                }
+
+        else:
+            data = {
+                'status': False,
+                'message': 'Please complete your profile'
+            }
+    else:
+        data = {
+            'status': False,
+            'message': 'Please enter the principal'
+        }
+    return JsonResponse(data)

@@ -20,6 +20,25 @@ class User(AbstractUser):
     zip = models.CharField(max_length=6)
 
 
+class Profile(models.Model):
+    GENDER = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    EDUCATION = (
+        ('G', 'Graduated'),
+        ('N', 'NOt Graduated'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
+    married = models.BooleanField()
+    gender = models.CharField(max_length=1, choices=GENDER)
+    dependents = models.IntegerField(default=0)
+    education = models.CharField(max_length=1, choices=EDUCATION)
+    self_employed = models.BooleanField()
+    income = models.FloatField()
+    credit_history = models.FloatField(default=1.0)
+
+
 class Loan(models.Model):
     name = models.CharField(max_length=10)
     interest = models.FloatField()
@@ -46,4 +65,6 @@ class UserLoan(models.Model):
     updated_date = models.DateField(auto_now=True)
 
 
-
+class AccuracyTable(models.Model):
+    accuracy = models.FloatField()
+    created_on = models.DateTimeField(auto_now_add=True)

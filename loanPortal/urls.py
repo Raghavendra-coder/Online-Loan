@@ -21,4 +21,5 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("calculate_emi/", views.calculate_emi, name="calculate_emi"),
     path("cong/", views.cong, name="cong"),
+    path("get_loan_approval_probability/", views.get_loan_approval_probability, name="get_loan_approval_probability"),
 ]
