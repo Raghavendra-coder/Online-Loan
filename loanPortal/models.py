@@ -29,7 +29,7 @@ class Profile(models.Model):
         ('G', 'Graduated'),
         ('N', 'NOt Graduated'),
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     married = models.BooleanField()
     gender = models.CharField(max_length=1, choices=GENDER)
     dependents = models.IntegerField(default=0)

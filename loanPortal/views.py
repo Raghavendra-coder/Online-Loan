@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.contrib.auth import login, logout
 from django.db.models import Q
 from .models import User, Loan, UserLoan, Profile, AccuracyTable
-from .train_model import get_approval_probability
+from .train_model import get_approval_probability, train_model
+from django.contrib import messages
 
 # Create your views here.
 
@@ -154,6 +155,7 @@ def request_loan(request):
     loans = UserLoan.objects.all()
     searched_filter = request.GET.get('filter')
     searched_value = request.GET.get('value')
+
     if searched_filter and searched_value:
         if searched_filter == '1':
             loans = loans.filter(loan_type__name=searched_value)
@@ -169,6 +171,16 @@ def request_loan(request):
 
 def loan_status(request, pk):
     loan = UserLoan.objects.filter(pk=pk).first()
+    user = loan.user.profile
+    prob = get_approval_probability(loan.principle, user.married, user.dependents, user.education, user.self_employed,
+                                    user.income, user.credit_history, user.gender)
+    # get_approval_probability(UserLoan)
+    # probability = AccuracyTable.objects.order_by('-created_on').first()
+    # accuracy = probability.accuracy
+    if prob == 1:
+        messages.success(request, f'This form has high probability of approval')
+    else:
+        messages.error(request, 'this loan may not be approved')
     form = LoanForm(instance=loan)
     i_loan = Loan.objects.all()
     if request.method == 'POST':
@@ -214,6 +226,7 @@ def approve_loan(request, pk):
 
 def reject_loan(request, pk):
     UserLoan.objects.filter(pk=pk).update(loan_status="Rj")
+
     return HttpResponseRedirect(reverse('requested_loan'))
 
 
@@ -250,43 +263,9 @@ def cong(request):
     return render(request, 'cong.html')
 
 
-def get_loan_approval_probability(request):
-    user = request.user
-    principle = request.GET.get('principle')
-    if principle:
-        profile = Profile.objects.filter(user=user).first()
-        if profile:
-            probability = AccuracyTable.objects.order_by('-created_on').first()
-            if probability:
-                chance = get_approval_probability(principle, profile.married, profile.dependents, profile.education,
-                                                  profile.self_employed, profile.income, profile.credit_history,
-                                                  profile.gender)
-                if chance:
-                    data = {
-                        'status': True,
-                        'load_status': True,
-                        'probability': round(probability.accuracy*100, 2)
-                    }
-                else:
-                    data = {
-                        'status': True,
-                        'load_status': False,
-                        'probability': 100 - round(probability.accuracy * 100, 2)
-                    }
-            else:
-                data = {
-                    'status': False,
-                    'message': 'Could not provide probability now.'
-                }
+def Train(request):
+    train_model()
+    return HttpResponseRedirect(reverse('requested_loan'))
 
-        else:
-            data = {
-                'status': False,
-                'message': 'Please complete your profile'
-            }
-    else:
-        data = {
-            'status': False,
-            'message': 'Please enter the principal'
-        }
-    return JsonResponse(data)
+
+
